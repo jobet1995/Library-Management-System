@@ -1,5 +1,4 @@
 #include "Headers/AuthManager.h"
-#include <iostream>
 
 AuthManager::AuthManager() : currentUser(nullptr) {}
 
@@ -7,16 +6,15 @@ void AuthManager::addUser(const User& user) {
     users.push_back(user);
 }
 
-bool AuthManager::login(const std::string& username, const std::string& password) {
+User* AuthManager::login(const std::string& username, const std::string& password) {
     for (auto& user : users) {
-        if (user.getUsername() == username && user.checkPassword(password) && user.getIsActive()) {
+        if (user.getUsername() == username && user.checkPassword(password)) {
             currentUser = &user;
             currentUser->updateLoginTime();
-            return true;
+            return currentUser;
         }
     }
-    currentUser = nullptr;
-    return false;
+    return nullptr;
 }
 
 void AuthManager::logout() {

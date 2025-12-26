@@ -12,8 +12,9 @@ private:
 
 public:
     AuthManager();
+
     void addUser(const User& user);
-    bool login(const std::string& username, const std::string& password);
+    User* login(const std::string& username, const std::string& password);
     void logout();
     bool isLoggedIn() const;
     User* getCurrentUser() const;
