@@ -1,0 +1,37 @@
+#include "Headers/AuthManager.h"
+#include <iostream>
+
+AuthManager::AuthManager() : currentUser(nullptr) {}
+
+void AuthManager::addUser(const User& user) {
+    users.push_back(user);
+}
+
+bool AuthManager::login(const std::string& username, const std::string& password) {
+    for (auto& user : users) {
+        if (user.getUsername() == username && user.checkPassword(password) && user.getIsActive()) {
+            currentUser = &user;
+            currentUser->updateLoginTime();
+            return true;
+        }
+    }
+    currentUser = nullptr;
+    return false;
+}
+
+void AuthManager::logout() {
+    currentUser = nullptr;
+}
+
+bool AuthManager::isLoggedIn() const {
+    return currentUser != nullptr;
+}
+
+User* AuthManager::getCurrentUser() const {
+    return currentUser;
+}
+
+bool AuthManager::checkPermission(const std::string& requiredRole) const {
+    if (!currentUser) return false;
+    return currentUser->hasPermission(requiredRole);
+}
