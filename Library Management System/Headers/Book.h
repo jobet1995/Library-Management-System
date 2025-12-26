@@ -38,6 +38,8 @@ public:
     int getYear() const;
     int getTotalCopies() const;
     int getAvailableCopies() const;
+    int getCopies() const;
+    int getAvailable() const;
     std::string getCoverImagePath() const;
     bool getIsReferenceOnly() const;
     std::vector<int> getBorrowerHistory() const;
